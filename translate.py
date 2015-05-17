@@ -35,7 +35,6 @@ if __name__ == '__main__':
     
     logging.basicConfig(level=logging.INFO, format='>>> %(process)d '
                                                        '%(filename)s %(levelname)s %(message)s', stream=sys.stdout)
-
     opts = parse_args()
     
     if opts.image is None or opts.image == '':
@@ -45,7 +44,7 @@ if __name__ == '__main__':
         logging.info('converting the image to PNG')
         original = opts.image
         converted = opts.image.split('.')[0] + '.png'
-        os.system('convert -rotate 90 {0} to {1}'.format(original, converted))
+        os.system('convert -rotate 90 {0} {1}'.format(original, converted))
         opts.image = converted
         logging.info('image converted')
     
@@ -53,7 +52,7 @@ if __name__ == '__main__':
     os.system('tesseract {0} {1}'.format(opts.image, 'image_text_output'))
     
     logging.info('translating the text to english')
-    os.system('trans -b -i {0} -o {1} -no-ansi'.format('image_text_output.txt', 'translated_output.txt'))
+    os.system('trans -b -i {0} -o {1}'.format('image_text_output.txt', 'translated_output.txt'))
     
     logging.info('opening the file')
     os.system('open translated_output.txt')
